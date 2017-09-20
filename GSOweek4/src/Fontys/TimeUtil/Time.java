@@ -41,10 +41,10 @@ public class Time implements ITime {
             throw new IllegalArgumentException("minutes must be within 0..59");
         }
         
-        gc = new GregorianCalendar(y, m , d, h, min);
+        gc = new GregorianCalendar(y, m - 1 , d, h, min);
     }
 
-    Time(Time t) {
+     Time(Time t) {
         gc = (GregorianCalendar) t.gc.clone();
     }
 
@@ -76,6 +76,7 @@ public class Time implements ITime {
         return gc.get(GregorianCalendar.YEAR);
     }
 
+    //+ 1 month
     @Override
     public int getMonth() {
         return gc.get(GregorianCalendar.MONTH) + 1;
