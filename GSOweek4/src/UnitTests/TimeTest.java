@@ -36,6 +36,55 @@ public class TimeTest
 
     }
 
+    @Test (expected=IllegalArgumentException.class)
+    public void OutOfRangeTest() {
+        int year = 2017;
+        int month = 12;
+        int day = 5;
+        int hour = 26;
+        int minute = 0;
+
+        Time time = new Time(year, month, day, hour, minute);
+        Assert.assertEquals(null, time);
+    }
+
+    @Test (expected=IllegalArgumentException.class)
+    public void OutOfRangeTest2() {
+        int year = 2017;
+        int month = 12;
+        int day = 5;
+        int hour = 23;
+        int minute = 65;
+
+        Time time = new Time(year, month, day, hour, minute);
+        Assert.assertEquals(null, time);
+    }
+
+    @Test (expected=IllegalArgumentException.class)
+    public void OutOfRangeTest3() {
+        int year = 2017;
+        int month = 14;
+        int day = 5;
+        int hour = 22;
+        int minute = 0;
+
+        Time time = new Time(year, month, day, hour, minute);
+        Assert.assertEquals(null, time);
+    }
+
+    @Test (expected=IllegalArgumentException.class)
+    public void OutOfRangeTest4() {
+        int year = 2017;
+        int month = 12;
+        int day = 45;
+        int hour = 23;
+        int minute = 0;
+
+        Time time = new Time(year, month, day, hour, minute);
+        Assert.assertEquals(null, time);
+    }
+
+
     @Test
     public void GetDayInWeekTest()
     {
@@ -68,7 +117,8 @@ public class TimeTest
         Assert.assertEquals(DayInWeek.SUN, day7);
 
         //cannot be reached
-//        Time time8 = new Time(2017, 9, 25, 12, 0);
+//        Time time8 = new Time(2017, 1, 30, 12, 0);
+//        //time8.s = 29;
 //        DayInWeek day8 = time8.getDayInWeek();
 //        Assert.assertEquals(null, day8);
     }
