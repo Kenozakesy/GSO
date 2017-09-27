@@ -24,7 +24,7 @@ public class Contact {
         return this.name;
     }
 
-    boolean addAppointment(Appointment a) throws Exception{
+    boolean addAppointment(Appointment a) {
         Iterator<Appointment> appointments = appointments();
         while (appointments.hasNext()) {
             if (a == appointments.next()) {

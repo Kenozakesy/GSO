@@ -44,6 +44,10 @@ public class AppointmentTest {
         String sub = "test";
         Appointment pon = new Appointment(sub, span);
 
+        Contact con = new Contact("Teo");
+
+        assertTrue(pon.addContact(con));
+        assertFalse(pon.addContact(con));
     }
 
     @Test

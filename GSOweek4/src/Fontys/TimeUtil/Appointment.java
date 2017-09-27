@@ -44,11 +44,7 @@ public class Appointment {
         }
 
         this.contacts.add(c);
-        try {
-            c.addAppointment(this);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        c.addAppointment(this);
         return true;
     }
 
