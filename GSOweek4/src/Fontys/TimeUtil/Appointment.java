@@ -1,6 +1,7 @@
 package Fontys.TimeUtil;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Created by Gebruiker on 27-9-2017.
@@ -14,59 +15,57 @@ public class Appointment {
     private ArrayList<Contact> contacts;
 
     public Appointment(String subject, ITimeSpan timeSpan) throws Exception{
-        if (!subject.isEmpty() || timeSpan != null)
-        {
             this.subject = subject;
             this.timeSpan = timeSpan;
             this.contacts = new ArrayList<>();
-        }
-        else{
-            throw new Exception("Subject or timespan cant be empty or null");
-        }
     }
 
     public String getSubject(){
         return subject;
     }
 
-
     public ITimeSpan getTimeSpan(){
         return timeSpan;
     }
 
-    public ArrayList<Contact> invitees(){
-        return contacts;
+    public Iterator<Contact> invitees(){
+        return contacts.iterator();
     }
 
     //add contatc but only if contact doesn't already exist
-    public boolean addContact(Contact contact){
-
-        boolean result = false;
-        if (contact != null)
-        {
-            //still needs work
-            if(!contacts.contains(contact))
+    public boolean addContact(Contact c){
+        Iterator<Contact> invitees = invitees();
+        while(invitees.hasNext()){
+            if (c == invitees.next())
             {
-                this.contacts.add(contact);
-                result = true;
+                return false;
             }
         }
-        return result;
+
+        this.contacts.add(c);
+        try {
+            c.addAppointment(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return true;
     }
 
     //removes contact
-    public boolean removeContact(Contact contact){
-        boolean result = false;
-
-        if (contact != null)
-        {
-            if(contacts.contains(contact))
+    public void removeContact(Contact c){
+        Iterator<Contact> invitees = invitees();
+        while(invitees.hasNext()){
+            if (c == invitees.next())
             {
-                this.contacts.remove(contact);
-                result = true;
+                this.contacts.remove(c);
+//                for (Contact con : this.contacts){
+//                    if (c == con)
+//                    {
+//                        this.contacts.remove(con);
+//                    }
+//                }
             }
-        }
 
-        return result;
+        }
     }
 }

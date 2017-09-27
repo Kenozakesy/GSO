@@ -13,68 +13,37 @@ public class Contact {
 
 
     private String name;
-
     private List<Appointment> appointments;
 
     public Contact(String name){
-        if(name.isEmpty() || name == null){
-            try {
-                throw new Exception("name cannot be empty or null");
-            } catch (Exception e) {
-                e.toString();
-            }
-        }
-
         this.name = name;
         this.appointments = new ArrayList<>();
     }
 
     public String getName(){
-        return name;
+        return this.name;
     }
 
     boolean addAppointment(Appointment a) throws Exception{
-        boolean result = true;
-
-        for(Appointment ap : appointments){
-
-            if(a.getTimeSpan().getBeginTime().compareTo(ap.getTimeSpan().getBeginTime()) >= 0 && a.getTimeSpan().getBeginTime().compareTo(ap.getTimeSpan().getEndTime()) <= 0)
-            {
-                return false;
-            }
-            else if(a.getTimeSpan().getEndTime().compareTo(ap.getTimeSpan().getBeginTime()) >= 0 && a.getTimeSpan().getEndTime().compareTo(ap.getTimeSpan().getEndTime()) <= 0)
-            {
-                return false;
-            }
-            else if(a.getTimeSpan().getBeginTime().compareTo(ap.getTimeSpan().getBeginTime()) == 0 && a.getTimeSpan().getEndTime().compareTo(ap.getTimeSpan().getEndTime()) == 0)
-            {
-                return false;
-            }
-            else if(a.getTimeSpan().getBeginTime().compareTo(ap.getTimeSpan().getBeginTime()) < 0 && a.getTimeSpan().getEndTime().compareTo(ap.getTimeSpan().getEndTime()) < 0)
-            {
-                return false;
-            }
-            else if(a.getTimeSpan().getBeginTime().compareTo(ap.getTimeSpan().getBeginTime()) >= 0 && a.getTimeSpan().getEndTime().compareTo(ap.getTimeSpan().getEndTime()) >= 0)
-            {
-                return false;
-            }
-            else if(a.getTimeSpan().isPartOf(ap.getTimeSpan()) || ap.getTimeSpan().isPartOf(a.getTimeSpan()))
-            {
+        Iterator<Appointment> appointments = appointments();
+        while (appointments.hasNext()) {
+            if (a == appointments.next()) {
                 return false;
             }
         }
+
         this.appointments.add(a);
+        a.addContact(this);
         return true;
     }
 
-    boolean removeAppointment(Appointment a){
-        boolean result = false;
-
-        if(this.appointments.contains(a)){
-            this.appointments.remove(a);
-            result = true;
+    void removeAppointment(Appointment a){
+        Iterator<Appointment> appointments = appointments();
+        while (appointments.hasNext()) {
+            if (a == appointments.next()) {
+                this.appointments.remove(a);
+            }
         }
-        return result;
     }
 
     public Iterator<Appointment> appointments(){
