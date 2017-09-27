@@ -14,7 +14,8 @@ public class Appointment {
 
     private ArrayList<Contact> contacts;
 
-    public Appointment(String subject, ITimeSpan timeSpan) throws Exception{
+    public Appointment(String subject, ITimeSpan timeSpan)
+    {
             this.subject = subject;
             this.timeSpan = timeSpan;
             this.contacts = new ArrayList<>();
