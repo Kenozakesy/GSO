@@ -38,12 +38,15 @@ public class Contact {
     }
 
     void removeAppointment(Appointment a){
+        Appointment appointment = null;
+
         Iterator<Appointment> appointments = appointments();
         while (appointments.hasNext()) {
             if (a == appointments.next()) {
-                this.appointments.remove(a);
+                appointment = a;
             }
         }
+        this.appointments.remove(appointment);
     }
 
     public Iterator<Appointment> appointments(){
