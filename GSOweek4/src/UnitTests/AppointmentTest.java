@@ -60,5 +60,10 @@ public class AppointmentTest {
         String sub = "test";
         Appointment pon = new Appointment(sub, span);
 
+        Contact con = new Contact("Teo");
+        pon.addContact(con);
+
+        pon.removeContact(con);
+        assertFalse(pon.invitees().hasNext());
     }
 }

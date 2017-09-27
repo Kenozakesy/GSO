@@ -50,11 +50,15 @@ public class Appointment {
 
     //removes contact
     public void removeContact(Contact c){
+
+        Contact placeholderContact = null;
+
         Iterator<Contact> invitees = invitees();
         while(invitees.hasNext()){
             if (c == invitees.next())
             {
-                this.contacts.remove(c);
+                placeholderContact = c;
+
 //                for (Contact con : this.contacts){
 //                    if (c == con)
 //                    {
@@ -62,7 +66,7 @@ public class Appointment {
 //                    }
 //                }
             }
-
         }
+        this.contacts.remove(placeholderContact);
     }
 }
