@@ -11,9 +11,6 @@ import java.util.List;
 public class EffectExchange implements IEffectsExchange {
 
 
-
-
-
     @Override
     public List<IFunds> GetRates() {
         return null;

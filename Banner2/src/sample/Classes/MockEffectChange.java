@@ -19,9 +19,9 @@ public class MockEffectChange implements IEffectsExchange {
         funds = new ArrayList<>();
 
         funds.add(new Fund("Google", 35));
-        funds.add(new Fund("Google", 6));
-        funds.add(new Fund("Google", 66));
-        funds.add(new Fund("Google", 900));
+        funds.add(new Fund("Apple", 6));
+        funds.add(new Fund("Windows", 66));
+        funds.add(new Fund("De turk", 900));
 
         //aanmaken timer
         rateTimer = new Timer();
@@ -31,12 +31,12 @@ public class MockEffectChange implements IEffectsExchange {
             @Override
             public void run() {
                 for (IFunds fonds : funds) {
-                    Fund fondsToUpdate = (Fund) fonds;
-                    double randomKoers = Math.round(randomRates.nextDouble() * 150.0) - Math.round(randomRates.nextDouble() * 25.0);
-                    fondsToUpdate.setRate(randomKoers);
+                    Fund fondsToUpdate = (Fund) fonds; //has to be changed
+                    double Rates = Math.round(randomRates.nextDouble() * 150.0) - Math.round(randomRates.nextDouble() * 25.0);
+                    fondsToUpdate.setRate(Rates);
                 }
             }
-        }, 0, 4000000);
+        }, 0, 5000);
     }
 
     @Override

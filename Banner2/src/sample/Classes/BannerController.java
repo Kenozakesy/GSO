@@ -17,6 +17,7 @@ public class BannerController
         // Start polling timer: update banner every two seconds
         pollingTimer = new Timer();
 
+
         // TODO get exchange information
     }
 
