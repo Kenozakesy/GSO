@@ -55,8 +55,9 @@ public class AEXBanner extends javafx.application.Application {
                 if (lag >= NANO_TICKS) {
                     // calculate new location of text
                     textPosition -= 10;
-                    if ((text.getLayoutBounds().getWidth() + textPosition) < 0)
+                    if ((text.getLayoutBounds().getWidth() + textPosition) < 0) {
                         textPosition = WIDTH;
+                    }
                         text.relocate(textPosition,0);
                         prevUpdate = now;
                 }

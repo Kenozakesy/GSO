@@ -24,7 +24,7 @@ public class BannerController
         pollingTimer.cancel();
         ((MockEffectChange)effectsExchange).cancelTimer();
          // Stop simulation timer of effectenbeurs
-        // TODO
+
     }
 
 }
