@@ -13,6 +13,8 @@ public class MockEffectChange implements IEffectsExchange {
     private List<IFunds> funds;
     private final Timer rateTimer;
     private Random randomRates = new Random();
+    TimerTask task;
+
 
     public MockEffectChange()
     {
@@ -25,23 +27,64 @@ public class MockEffectChange implements IEffectsExchange {
 
         //aanmaken timer
         rateTimer = new Timer();
+        start();
 
         //in dit stuk code word elke 5 seconde een nieuwe koers gegenereerd en geset
-        rateTimer.scheduleAtFixedRate(new TimerTask() {
+ //       rateTimer.scheduleAtFixedRate(new TimerTask() {
+ //           @Override
+ //           public void run() {
+  //              for (IFunds fonds : funds) {
+   //                 Fund fondsToUpdate = (Fund) fonds; //has to be changed
+   //                 double Rates = Math.round(randomRates.nextDouble() * 150.0) - Math.round(randomRates.nextDouble() * 25.0);
+   //                 fondsToUpdate.setRate(Rates);
+   //             }
+  //  //        }
+    //    }, 0, 5000);
+    }
+    private void start() {
+         task = new TimerTask() {
             @Override
             public void run() {
-                for (IFunds fonds : funds) {
-                    Fund fondsToUpdate = (Fund) fonds; //has to be changed
+                for (IFunds fund : funds) {
                     double Rates = Math.round(randomRates.nextDouble() * 150.0) - Math.round(randomRates.nextDouble() * 25.0);
-                    fondsToUpdate.setRate(Rates);
+                    ((Fund) fund).setRate(Rates);
                 }
             }
-        }, 0, 5000);
+            };
+        startTimer();
+
     }
 
-    @Override
+
+
+
+
+   //     this.rateTimer.schedule(new TimerTask() {
+    //        @Override
+    //        public void run() {
+   //             for (IFunds fund : funds) {
+   //                 double Rates = Math.round(randomRates.nextDouble() * 150.0) - Math.round(randomRates.nextDouble() * 25.0);
+   //                 ((Fund) fund).setRate(Rates);
+   //             }
+   //         }
+   //     }, 0, 5000);
+
+
+    public void startTimer(){
+        rateTimer.scheduleAtFixedRate(task, 0, 5000);
+    }
+
     public List<IFunds> GetRates()
     {
         return funds;
+    }
+
+    public void cancelTimer(){
+        rateTimer.cancel();
+    }
+
+    public Iterator<IFunds> getIterator()
+    {
+        return funds.iterator();
     }
 }

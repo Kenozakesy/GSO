@@ -18,12 +18,12 @@ public class Fund implements IFunds {
 
     @Override
     public String GetName() {
-        return null;
+        return name;
     }
 
     @Override
     public double GetRate() {
-        return 0;
+        return rate;
     }
 
     public void setRate(double newKoers)
