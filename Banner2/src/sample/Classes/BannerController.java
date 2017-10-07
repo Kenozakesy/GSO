@@ -17,8 +17,6 @@ public class BannerController
         // Start polling timer: update banner every two seconds
         pollingTimer = new Timer();
         pollingTimer.schedule(new UpdateTask(this.banner, this.effectsExchange), 0, 2000);
-
-        // TODO get exchange information
     }
 
     // Stop banner controller

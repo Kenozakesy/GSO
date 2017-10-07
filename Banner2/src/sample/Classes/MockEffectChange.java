@@ -29,17 +29,6 @@ public class MockEffectChange implements IEffectsExchange {
         rateTimer = new Timer();
         start();
 
-        //in dit stuk code word elke 5 seconde een nieuwe koers gegenereerd en geset
- //       rateTimer.scheduleAtFixedRate(new TimerTask() {
- //           @Override
- //           public void run() {
-  //              for (IFunds fonds : funds) {
-   //                 Fund fondsToUpdate = (Fund) fonds; //has to be changed
-   //                 double Rates = Math.round(randomRates.nextDouble() * 150.0) - Math.round(randomRates.nextDouble() * 25.0);
-   //                 fondsToUpdate.setRate(Rates);
-   //             }
-  //  //        }
-    //    }, 0, 5000);
     }
     private void start() {
          task = new TimerTask() {
@@ -54,20 +43,6 @@ public class MockEffectChange implements IEffectsExchange {
         startTimer();
 
     }
-
-
-
-
-
-   //     this.rateTimer.schedule(new TimerTask() {
-    //        @Override
-    //        public void run() {
-   //             for (IFunds fund : funds) {
-   //                 double Rates = Math.round(randomRates.nextDouble() * 150.0) - Math.round(randomRates.nextDouble() * 25.0);
-   //                 ((Fund) fund).setRate(Rates);
-   //             }
-   //         }
-   //     }, 0, 5000);
 
 
     public void startTimer(){
