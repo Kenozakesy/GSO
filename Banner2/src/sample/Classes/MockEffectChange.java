@@ -3,12 +3,14 @@ package sample.Classes;
 import sample.Interfaces.IEffectsExchange;
 import sample.Interfaces.IFunds;
 
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.*;
 
 /**
  * Created by Gebruiker on 4-10-2017.
  */
-public class MockEffectChange implements IEffectsExchange {
+public class MockEffectChange extends UnicastRemoteObject implements IEffectsExchange {
 
     private List<IFunds> funds;
     private final Timer rateTimer;
@@ -16,8 +18,8 @@ public class MockEffectChange implements IEffectsExchange {
     TimerTask task;
 
 
-    public MockEffectChange()
-    {
+    public MockEffectChange() throws RemoteException {
+
         funds = new ArrayList<>();
 
         funds.add(new Fund("Google", 35));
@@ -30,6 +32,7 @@ public class MockEffectChange implements IEffectsExchange {
         start();
 
     }
+
     private void start() {
          task = new TimerTask() {
             @Override

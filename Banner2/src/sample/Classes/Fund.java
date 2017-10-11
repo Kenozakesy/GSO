@@ -2,10 +2,12 @@ package sample.Classes;
 
 import sample.Interfaces.IFunds;
 
+import java.io.Serializable;
+
 /**
  * Created by Gebruiker on 4-10-2017.
  */
-public class Fund implements IFunds {
+public class Fund implements IFunds, Serializable {
 
     private String name;
     private double rate;
