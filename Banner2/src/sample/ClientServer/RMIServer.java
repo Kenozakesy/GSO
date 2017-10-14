@@ -21,42 +21,42 @@ public class RMIServer {
     private static final int portNumber = 1099;
     private static final String bindingName = "StudentAdmin";
     private Registry registry = null;
-    private MockEffectChange studentAdmin = null;
+    private MockEffectChange MockExchange = null;
 
 
     //Constructor
     public RMIServer() {
 
-//        // Print port number for registry
-//        System.out.println("Server: Port number " + portNumber);
-//
-//        // Create student administration
-//        try {
-//            studentAdmin = new StudentAdmin();
-//            System.out.println("Server: Student administration created");
-//        } catch (RemoteException ex) {
-//            System.out.println("Server: Cannot create student administration");
-//            System.out.println("Server: RemoteException: " + ex.getMessage());
-//            studentAdmin = null;
-//        }
-//
-//        // Create registry at port number
-//        try {
-//            registry = LocateRegistry.createRegistry(portNumber);
-//            System.out.println("Server: Registry created on port number " + portNumber);
-//        } catch (RemoteException ex) {
-//            System.out.println("Server: Cannot create registry");
-//            System.out.println("Server: RemoteException: " + ex.getMessage());
-//            registry = null;
-//        }
-//
-//        // Bind student administration using registry
-//        try {
-//            registry.rebind(bindingName, studentAdmin);
-//        } catch (RemoteException ex) {
-//            System.out.println("Server: Cannot bind student administration");
-//            System.out.println("Server: RemoteException: " + ex.getMessage());
-//        }
+        // Print port number for registry
+        System.out.println("Server: Port number " + portNumber);
+
+        // Create student administration
+        try {
+            MockExchange = new MockEffectChange();
+            System.out.println("Server: Student administration created");
+        } catch (RemoteException ex) {
+            System.out.println("Server: Cannot create student administration");
+            System.out.println("Server: RemoteException: " + ex.getMessage());
+            MockExchange = null;
+        }
+
+        // Create registry at port number
+        try {
+            registry = LocateRegistry.createRegistry(portNumber);
+            System.out.println("Server: Registry created on port number " + portNumber);
+        } catch (RemoteException ex) {
+            System.out.println("Server: Cannot create registry");
+            System.out.println("Server: RemoteException: " + ex.getMessage());
+            registry = null;
+        }
+
+        // Bind student administration using registry
+        try {
+            registry.rebind(bindingName, MockExchange);
+        } catch (RemoteException ex) {
+            System.out.println("Server: Cannot bind student administration");
+            System.out.println("Server: RemoteException: " + ex.getMessage());
+        }
     }
 
     //Methods
