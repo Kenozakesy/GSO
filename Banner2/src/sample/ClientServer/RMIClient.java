@@ -16,7 +16,7 @@ public class RMIClient {
     private boolean locateRegistry = true;
     private static final String bindingName = "MockExchange";
     private Registry registry = null;
-    private IEffectsExchange studentAdmin = null;
+    private IEffectsExchange effectexchange = null;
 
     // Constructor
     public RMIClient(String ipAddress, int portNumber) {
@@ -50,28 +50,28 @@ public class RMIClient {
         // Bind student administration using registry
         if (registry != null) {
             try {
-                studentAdmin = (IEffectsExchange) registry.lookup(bindingName);
+                effectexchange = (IEffectsExchange) registry.lookup(bindingName);
             } catch (RemoteException ex) {
                 System.out.println("Client: Cannot bind student administration");
                 System.out.println("Client: RemoteException: " + ex.getMessage());
-                studentAdmin = null;
+                effectexchange = null;
             } catch (NotBoundException ex) {
                 System.out.println("Client: Cannot bind student administration");
                 System.out.println("Client: NotBoundException: " + ex.getMessage());
-                studentAdmin = null;
+                effectexchange = null;
             }
         }
 
         // Print result binding student administration
-        if (studentAdmin != null) {
+        if (effectexchange != null) {
             System.out.println("Client: Student administration bound");
         } else {
             System.out.println("Client: Student administration is null pointer");
         }
 
         // Test RMI connection
-        if (studentAdmin != null) {
-            testStudentAdministration();
+        if (effectexchange != null) {
+            testPullBanner();
         }
     }
 
@@ -94,7 +94,7 @@ public class RMIClient {
     }
 
     // Test RMI connection (needs to be changed)
-    private void testStudentAdministration() {
+    private void testPullBanner() {
         // Get number of students
 //        try {
 //            System.out.println("Client: Number of students: " + studentAdmin.getNumberOfStudents());
