@@ -21,58 +21,58 @@ public class RMIClient {
     // Constructor
     public RMIClient(String ipAddress, int portNumber) {
 
-//        // Print IP address and port number for registry
-//        System.out.println("Client: IP Address: " + ipAddress);
-//        System.out.println("Client: Port number " + portNumber);
-//
-//        // Locate registry at IP address and port number
-//        try {
-//            registry = LocateRegistry.getRegistry(ipAddress, portNumber);
-//        } catch (RemoteException ex) {
-//            System.out.println("Client: Cannot locate registry");
-//            System.out.println("Client: RemoteException: " + ex.getMessage());
-//            registry = null;
-//        }
-//
-//        // Print result locating registry
-//        if (registry != null) {
-//            System.out.println("Client: Registry located");
-//        } else {
-//            System.out.println("Client: Cannot locate registry");
-//            System.out.println("Client: Registry is null pointer");
-//        }
-//
-//        // Print contents of registry
-//        if (registry != null) {
-//            printContentsRegistry();
-//        }
-//
-//        // Bind student administration using registry
-//        if (registry != null) {
-//            try {
-//                studentAdmin = (IStudentAdmin) registry.lookup(bindingName);
-//            } catch (RemoteException ex) {
-//                System.out.println("Client: Cannot bind student administration");
-//                System.out.println("Client: RemoteException: " + ex.getMessage());
-//                studentAdmin = null;
-//            } catch (NotBoundException ex) {
-//                System.out.println("Client: Cannot bind student administration");
-//                System.out.println("Client: NotBoundException: " + ex.getMessage());
-//                studentAdmin = null;
-//            }
-//        }
-//
-//        // Print result binding student administration
-//        if (studentAdmin != null) {
-//            System.out.println("Client: Student administration bound");
-//        } else {
-//            System.out.println("Client: Student administration is null pointer");
-//        }
-//
-//        // Test RMI connection
-//        if (studentAdmin != null) {
-//            testStudentAdministration();
-//        }
+        // Print IP address and port number for registry
+        System.out.println("Client: IP Address: " + ipAddress);
+        System.out.println("Client: Port number " + portNumber);
+
+        // Locate registry at IP address and port number
+        try {
+            registry = LocateRegistry.getRegistry(ipAddress, portNumber);
+        } catch (RemoteException ex) {
+            System.out.println("Client: Cannot locate registry");
+            System.out.println("Client: RemoteException: " + ex.getMessage());
+            registry = null;
+        }
+
+        // Print result locating registry
+        if (registry != null) {
+            System.out.println("Client: Registry located");
+        } else {
+            System.out.println("Client: Cannot locate registry");
+            System.out.println("Client: Registry is null pointer");
+        }
+
+        // Print contents of registry
+        if (registry != null) {
+            printContentsRegistry();
+        }
+
+        // Bind student administration using registry
+        if (registry != null) {
+            try {
+                studentAdmin = (IEffectsExchange) registry.lookup(bindingName);
+            } catch (RemoteException ex) {
+                System.out.println("Client: Cannot bind student administration");
+                System.out.println("Client: RemoteException: " + ex.getMessage());
+                studentAdmin = null;
+            } catch (NotBoundException ex) {
+                System.out.println("Client: Cannot bind student administration");
+                System.out.println("Client: NotBoundException: " + ex.getMessage());
+                studentAdmin = null;
+            }
+        }
+
+        // Print result binding student administration
+        if (studentAdmin != null) {
+            System.out.println("Client: Student administration bound");
+        } else {
+            System.out.println("Client: Student administration is null pointer");
+        }
+
+        // Test RMI connection
+        if (studentAdmin != null) {
+            testStudentAdministration();
+        }
     }
 
     // Print contents of registry
