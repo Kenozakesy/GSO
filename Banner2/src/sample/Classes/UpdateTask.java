@@ -4,6 +4,7 @@ import javafx.application.Platform;
 import sample.Interfaces.IEffectsExchange;
 import sample.Interfaces.IFunds;
 
+import java.rmi.RemoteException;
 import java.util.TimerTask;
 
 /**
@@ -23,13 +24,18 @@ public class UpdateTask extends TimerTask {
     public void run() {
         final StringBuilder b = new StringBuilder();
 
-        for(IFunds f : effectsExchange.GetRates())
-        {
-            b.append(f.GetName() + " " + " " + f.GetRate() + " ");
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                banner.setExchange(b.toString().trim());
-            }
-        });
-}}}
+        try {
+            for(IFunds f : effectsExchange.GetRates())
+            {
+                b.append(f.GetName() + " " + " " + f.GetRate() + " ");
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    banner.setExchange(b.toString().trim());
+                }
+            });
+    }
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }}

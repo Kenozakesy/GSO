@@ -1,6 +1,7 @@
 package sample.Interfaces;
 
 import java.rmi.Remote;
+import java.rmi.RemoteException;
 import java.util.List;
 
 /**
@@ -8,5 +9,5 @@ import java.util.List;
  */
 public interface IEffectsExchange extends Remote {
 
-    List<IFunds> GetRates();
+    List<IFunds> GetRates() throws RemoteException;
 }
