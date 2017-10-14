@@ -1,25 +1,32 @@
 package sample.ClientServer;
 
+import sample.Classes.BannerController;
+import sample.Classes.Fund;
 import sample.Interfaces.IEffectsExchange;
+import sample.Interfaces.IFunds;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * Created by Gebruiker on 11-10-2017.
  */
 public class RMIClient {
 
-    private boolean locateRegistry = true;
-    private static final String bindingName = "MockExchange";
+    private static final String bindingName = "exchange";
+    private Timer pollingTimer;
+
     private Registry registry = null;
+    private BannerController bannerController;
     private IEffectsExchange effectexchange = null;
 
     // Constructor
     public RMIClient(String ipAddress, int portNumber) {
+
+       // bannerController = bc;
 
         // Print IP address and port number for registry
         System.out.println("Client: IP Address: " + ipAddress);
@@ -47,32 +54,39 @@ public class RMIClient {
             printContentsRegistry();
         }
 
-        // Bind student administration using registry
-        if (registry != null) {
-            try {
-                effectexchange = (IEffectsExchange) registry.lookup(bindingName);
-            } catch (RemoteException ex) {
-                System.out.println("Client: Cannot bind student administration");
-                System.out.println("Client: RemoteException: " + ex.getMessage());
-                effectexchange = null;
-            } catch (NotBoundException ex) {
-                System.out.println("Client: Cannot bind student administration");
-                System.out.println("Client: NotBoundException: " + ex.getMessage());
-                effectexchange = null;
+        pollingTimer = new Timer();
+        pollingTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                // Bind student administration using registry
+                if (registry != null) {
+                    try {
+                        effectexchange = (IEffectsExchange) registry.lookup(bindingName);
+                    } catch (RemoteException ex) {
+                        System.out.println("Client: Cannot bind MockExchange");
+                        System.out.println("Client: RemoteException: " + ex.getMessage());
+                        effectexchange = null;
+                    } catch (NotBoundException ex) {
+                        System.out.println("Client: Cannot bind MockExchange");
+                        System.out.println("Client: NotBoundException: " + ex.getMessage());
+                        effectexchange = null;
+                    }
+                }
+
+                // Print result binding student administration
+                if (effectexchange != null) {
+                    System.out.println("Client: Student administration bound");
+                } else {
+                    System.out.println("Client: Student administration is null pointer");
+                }
+
+                // Test RMI connection
+                if (effectexchange != null) {
+                    testPullBanner();
+                }
             }
-        }
+        }, 0, 5000);
 
-        // Print result binding student administration
-        if (effectexchange != null) {
-            System.out.println("Client: Student administration bound");
-        } else {
-            System.out.println("Client: Student administration is null pointer");
-        }
-
-        // Test RMI connection
-        if (effectexchange != null) {
-            testPullBanner();
-        }
     }
 
     // Print contents of registry
@@ -96,60 +110,23 @@ public class RMIClient {
     // Test RMI connection (needs to be changed)
     private void testPullBanner() {
         // Get number of students
-//        try {
-//            System.out.println("Client: Number of students: " + studentAdmin.getNumberOfStudents());
-//        } catch (RemoteException ex) {
-//            System.out.println("Client: Cannot get number of students");
-//            System.out.println("Client: RemoteException: " + ex.getMessage());
-//        }
-//
+        try {
+            List<IFunds> funds = effectexchange.GetRates();
+            for (IFunds f: funds) {
+                Fund fund = (Fund) f;
+                System.out.println(fund.GetName() + " " + fund.GetRate());
+            }
+        } catch (RemoteException ex) {
+            System.out.println("Client: Cannot get number of students");
+            System.out.println("Client: RemoteException: " + ex.getMessage());
+        }
+
 //        // Add student Jan to student administration
 //        try {
 //            Student jan = studentAdmin.addStudent("Jan", "Jansen", 1995);
 //            System.out.println("Client: Student " + jan.toString() + " added to student administration");
 //        } catch (RemoteException ex) {
 //            System.out.println("Client: Cannot add first student to student administration");
-//            System.out.println("Client: RemoteException: " + ex.getMessage());
-//        }
-//
-//        // Add Student Piet to student administration
-//        try {
-//            Student piet = studentAdmin.addStudent("Piet", "Pietersen", 1994);
-//            System.out.println("Client: Student " + piet.toString() + " added to student administration");
-//        } catch (RemoteException ex) {
-//            System.out.println("Client: Cannot add second student to student administration");
-//            System.out.println("Client: RemoteException: " + ex.getMessage());
-//        }
-//
-//        // Get number of students
-//        try {
-//            System.out.println("Client: Number of students: " + studentAdmin.getNumberOfStudents());
-//        } catch (RemoteException ex) {
-//            System.out.println("Client: Cannot get number of students");
-//            System.out.println("Client: RemoteException: " + ex.getMessage());
-//        }
-//
-//        // Get first student
-//        try {
-//            System.out.println("Client: First student: " + studentAdmin.getStudent(0));
-//        } catch (RemoteException ex) {
-//            System.out.println("Client: Cannot get first student");
-//            System.out.println("Client: RemoteException: " + ex.getMessage());
-//        }
-//
-//        // Get second student
-//        try {
-//            System.out.println("Client: Second student: " + studentAdmin.getStudent(1));
-//        } catch (RemoteException ex) {
-//            System.out.println("Client: Cannot get second student");
-//            System.out.println("Client: RemoteException: " + ex.getMessage());
-//        }
-//
-//        // Get third student (does not exist)
-//        try {
-//            System.out.println("Client: Third student: " + studentAdmin.getStudent(2));
-//        } catch (RemoteException ex) {
-//            System.out.println("Client: Cannot get third student");
 //            System.out.println("Client: RemoteException: " + ex.getMessage());
 //        }
     }
@@ -168,6 +145,7 @@ public class RMIClient {
         // Get port number
         System.out.print("Client: Enter port number: ");
         int portNumber = input.nextInt();
+
 
         // Create client
         RMIClient client = new RMIClient(ipAddress, portNumber);

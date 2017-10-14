@@ -19,7 +19,7 @@ public class RMIServer {
     private boolean createRegistry = true;
 
     private static final int portNumber = 1099;
-    private static final String bindingName = "StudentAdmin";
+    private static final String bindingName = "exchange";
     private Registry registry = null;
     private MockEffectChange MockExchange = null;
 
