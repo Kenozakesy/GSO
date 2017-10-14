@@ -1,6 +1,8 @@
 package sample.Classes;
 
 import sample.Interfaces.IEffectsExchange;
+
+import java.rmi.RemoteException;
 import java.util.Timer;
 
 public class BannerController
@@ -12,7 +14,11 @@ public class BannerController
     public BannerController(AEXBanner banner) {
 
         this.banner = banner;
-        this.effectsExchange = new MockEffectChange();
+        try {
+            this.effectsExchange = new MockEffectChange();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
 
         // Start polling timer: update banner every two seconds
         pollingTimer = new Timer();

@@ -33,9 +33,9 @@ public class RMIServer {
         // Create student administration
         try {
             MockExchange = new MockEffectChange();
-            System.out.println("Server: Student administration created");
+            System.out.println("Server: MockExchange created");
         } catch (RemoteException ex) {
-            System.out.println("Server: Cannot create student administration");
+            System.out.println("Server: Cannot create MockExchange");
             System.out.println("Server: RemoteException: " + ex.getMessage());
             MockExchange = null;
         }
@@ -50,11 +50,11 @@ public class RMIServer {
             registry = null;
         }
 
-        // Bind student administration using registry
+        // Bind MockExchange using registry
         try {
             registry.rebind(bindingName, MockExchange);
         } catch (RemoteException ex) {
-            System.out.println("Server: Cannot bind student administration");
+            System.out.println("Server: Cannot bind MockExchange");
             System.out.println("Server: RemoteException: " + ex.getMessage());
         }
     }
