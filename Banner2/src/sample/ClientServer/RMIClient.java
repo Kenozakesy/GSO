@@ -14,6 +14,8 @@ import java.util.*;
 /**
  * Created by Gebruiker on 11-10-2017.
  */
+
+//RMI client to connect to the server
 public class RMIClient {
 
     private static final String bindingName = "exchange";
