@@ -5,6 +5,7 @@ import sample.Interfaces.IEffectsExchange;
 import sample.Interfaces.IFunds;
 
 import java.rmi.RemoteException;
+import java.util.List;
 import java.util.TimerTask;
 
 /**

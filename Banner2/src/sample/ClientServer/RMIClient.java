@@ -2,6 +2,7 @@ package sample.ClientServer;
 
 import sample.Classes.BannerController;
 import sample.Classes.Fund;
+import sample.FontysPublisher.RemotePublisher;
 import sample.Interfaces.IEffectsExchange;
 import sample.Interfaces.IFunds;
 
@@ -24,11 +25,12 @@ public class RMIClient {
     private Registry registry = null;
     private BannerController bannerController;
     private IEffectsExchange effectexchange = null;
+    private RemotePublisher publisher;
 
     // Constructor
-    public RMIClient(String ipAddress, int portNumber) {
+    public RMIClient(String ipAddress, int portNumber, BannerController bannerController) throws RemoteException,NotBoundException {
 
-       // bannerController = bc;
+       this.bannerController = bannerController;
 
         // Print IP address and port number for registry
         System.out.println("Client: IP Address: " + ipAddress);
@@ -43,13 +45,17 @@ public class RMIClient {
             registry = null;
         }
 
-        // Print result locating registry
-        if (registry != null) {
-            System.out.println("Client: Registry located");
-        } else {
-            System.out.println("Client: Cannot locate registry");
-            System.out.println("Client: Registry is null pointer");
-        }
+            // Print result locating registry
+            if (registry != null) {
+                effectexchange = (IEffectsExchange)registry.lookup(bindingName);
+                bannerController.setEffectsExchange(effectexchange);
+                bannerController.subscribe();
+
+                System.out.println("Client: Registry located");
+            } else {
+                System.out.println("Client: Cannot locate registry");
+                System.out.println("Client: Registry is null pointer");
+            }
 
         // Print contents of registry
         if (registry != null) {
@@ -87,7 +93,7 @@ public class RMIClient {
                     testPullBanner();
                 }
             }
-        }, 0, 5000);
+        }, 0, 3000);
 
     }
 
@@ -134,23 +140,23 @@ public class RMIClient {
     }
 
     // Main method
-    public static void main(String[] args) {
+ //   public static void main(String[] args) {
 
         // Welcome message
-        System.out.println("CLIENT USING REGISTRY");
+  ////      System.out.println("CLIENT USING REGISTRY");
 
         // Get ip address of server
-        Scanner input = new Scanner(System.in);
-        System.out.print("Client: Enter IP address of server: ");
-        String ipAddress = input.nextLine();
+ //       Scanner input = new Scanner(System.in);
+ //       System.out.print("Client: Enter IP address of server: ");
+ //       String ipAddress = input.nextLine();
 
         // Get port number
-        System.out.print("Client: Enter port number: ");
-        int portNumber = input.nextInt();
+ //       System.out.print("Client: Enter port number: ");
+ //       int portNumber = input.nextInt();
 
 
         // Create client
-        RMIClient client = new RMIClient(ipAddress, portNumber);
+ //       RMIClient client = new RMIClient(ipAddress, portNumber, bannerController);
     }
 
-}
+//}

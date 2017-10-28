@@ -9,6 +9,9 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+
 /**
  * Created by Gebruiker on 4-10-2017.
  */
@@ -26,7 +29,7 @@ public class AEXBanner extends javafx.application.Application {
     private AnimationTimer animationTimer;
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws RemoteException, NotBoundException {
 
         controller = new BannerController(this);
 
@@ -80,9 +83,11 @@ public class AEXBanner extends javafx.application.Application {
     }
 
     @Override
-    public void stop() {
+    public void stop() throws RemoteException{
         animationTimer.stop();
         controller.stop();
     }
+
+    public static void main(String[] args){launch(args);}
 
 }
